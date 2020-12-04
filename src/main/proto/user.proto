@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package com.senthuran.User;
+
+option java_multiple_files = true;
+option java_package = "com.senthuran.User.Controller";
+
+service UserService{
+  rpc viewUser(viewUserRequest) returns (viewUserResponse) {}
+  rpc addUser (userRequest) returns (userResponse){}
+  rpc viewAllUser(Empty) returns (viewAllUserResponse){}
+}
+
+message  viewUserRequest{
+  int32 id=1;
+}
+
+message  viewUserResponse{
+  int32 userid = 1;
+  string name = 2;
+  string adddress = 3;
+}
+
+message userRequest{
+  int32 userid = 1;
+  string name = 2;
+  string adddress = 3;
+}
+
+message userResponse {
+  string message = 1;
+}
+
+message Empty{
+
+}
+
+message viewAllUserResponse {
+  repeated User user = 1;
+}
+
+message User {
+  int32 id = 1;
+  string name = 2  ;
+  string address = 3;
+}
