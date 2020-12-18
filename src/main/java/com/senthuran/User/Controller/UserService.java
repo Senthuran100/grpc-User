@@ -2,6 +2,7 @@ package com.senthuran.User.Controller;
 
 import com.senthuran.User.Document.User;
 import com.senthuran.User.Repository.UserRepository;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +23,34 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
 
         logger.info("View User method is invoked");
         Optional<User> user= userRepository.findById(request.getId());
-        viewUserResponse userresponse = viewUserResponse.newBuilder().setAdddress(user.get().getAddress()).setUserid(user.get().getId())
-                .setName(user.get().getName()).build();
-        response.onNext(userresponse);
-        response.onCompleted();
-
+        if(user.isPresent()) {
+            viewUserResponse userresponse = viewUserResponse.newBuilder().setAdddress(user.get().getAddress()).setUserid(user.get().getId())
+                    .setName(user.get().getName()).build();
+            response.onNext(userresponse);
+            response.onCompleted();
+        } else {
+            response.onError(Status.NOT_FOUND
+            .withDescription("There is no User with id "+request.getId())
+            .asRuntimeException()
+            );
+        }
     }
 
     @Override
     public void addUser(userRequest request, StreamObserver<userResponse> responseObserver) {
 
         logger.info("Add User method is invoked");
-        userRepository.save(new User(request.getUserid(),request.getName(),request.getAdddress()));
-        userResponse Response = userResponse.newBuilder().setMessage("Success").build();
-        responseObserver.onNext(Response);
-        responseObserver.onCompleted();
+        Optional<User> user= userRepository.findById(request.getUserid());
+        if(user.isEmpty()) {
+            userRepository.save(new User(request.getUserid(), request.getName(), request.getAdddress()));
+            userResponse Response = userResponse.newBuilder().setMessage("Success").build();
+            responseObserver.onNext(Response);
+            responseObserver.onCompleted();
+        } else {
+            responseObserver.onError(Status.ALREADY_EXISTS
+            .withDescription("Already a user exist with id "+request.getUserid()+".")
+            .asRuntimeException());
+        }
     }
 
     @Override
