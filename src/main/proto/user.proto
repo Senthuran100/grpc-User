@@ -4,11 +4,26 @@ package com.senthuran.User;
 
 option java_multiple_files = true;
 option java_package = "com.senthuran.User.Controller";
+import "google/api/annotations.proto";
 
 service UserService{
-  rpc viewUser(viewUserRequest) returns (viewUserResponse) {}
-  rpc addUser (userRequest) returns (userResponse){}
-  rpc viewAllUser(Empty) returns (viewAllUserResponse){}
+  rpc viewUser(viewUserRequest) returns (viewUserResponse) {
+    option (google.api.http) = {
+      get: "/v1/user/{id}"
+    };
+  }
+  rpc addUser (userRequest) returns (userResponse){
+    option(google.api.http) = {
+      post: "/v1/user"
+      body: "*"
+    };
+
+  }
+  rpc viewAllUser(Empty) returns (viewAllUserResponse){
+    option (google.api.http) = {
+      get: "/v1/user"
+    };
+  }
 }
 
 message  viewUserRequest{

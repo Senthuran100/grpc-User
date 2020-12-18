@@ -19,16 +19,20 @@ repositories {
 	mavenCentral()
 }
 
+def protobufVersion = '3.5.1'
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-couchbase'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
-//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'io.grpc', name: 'grpc-all', version: '1.33.1'
 	compile group: 'io.github.lognet', name: 'grpc-spring-boot-starter', version: '4.2.3'
 	compile group: 'com.couchbase.client', name: 'java-client', version: '2.7.15'
+	compile "com.google.api.grpc:proto-google-common-protos:1.12.0"
+	compile "com.google.protobuf:protobuf-java-util:${protobufVersion}"
 
 }
 
