@@ -14,7 +14,7 @@ gRPC based API service implementation  using Spring boot and Couchbase Server.
 ### Exposing gPRC service as HTTP JSON...
 
 
-* Annotate the gRPC service with the HTTP Options. Please refer this [proto](proto/user.proto) file.
+* Annotate the gRPC service with the HTTP Options. Please refer this [proto](src/main/proto/user.proto) file.
 * Generate the .pd file from the proto file. Please refer the below command to generate the .pb file.<br/>
 ``` protoc -I. -Ibuild/extracted-include-protos/main --include_imports --include_source_info --descriptor_set_out=user.pb src/main/proto/user.proto ```
 * Configure the envoy to proxy the HTTP request to the GRPC service.    
@@ -33,5 +33,6 @@ gRPC based API service implementation  using Spring boot and Couchbase Server.
 -> Add user with request body. <br/>
 ``curl -X POST http://localhost:51051/v1/user -H 'Content-Type: application/json' -d '{"userid": 500,"name": "ABC","adddress": "No 10 PQR street XYZ"}'``
 
-
+Please refer the below image.<br/> 
+![](Images/curlcommand.png)
 
