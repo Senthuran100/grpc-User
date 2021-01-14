@@ -1,0 +1,76 @@
+package com.senthuran.Product;
+
+option java_multiple_files = true;
+option java_package = "com.senthuran.Product";
+import "google/api/annotations.proto";
+
+service ProductService {
+
+  rpc viewProduct(viewProductRequest) returns (viewProductResponse){
+    option (google.api.http) = {
+      get: "/v1/product/{id}"
+    };
+  }
+
+  rpc addProduct (addProductRequest) returns (addProductResponse){
+    option(google.api.http) = {
+      post: "/v1/product"
+      body: "*"
+    };
+  }
+
+  rpc viewAllProducts(Empty) returns (viewAllProductsResponse){
+    option (google.api.http) = {
+      get: "/v1/product"
+    };
+  }
+
+  rpc updateProduct(updateProductRequest) returns (updateProductResponse) {
+    option(google.api.http) = {
+      post: "/v1/updateProduct"
+      body: "*"
+    };
+  }
+}
+
+message addProductRequest {
+  required int32 productID =1;
+  optional  string productName = 2;
+  optional int32 quantity = 3;
+}
+
+message addProductResponse {
+ required string message =1;
+}
+
+message viewProductRequest {
+   required int32 productId = 1;
+}
+
+message viewProductResponse {
+  required int32 productID =1;
+  optional  string productName = 2;
+  optional int32 quantity = 3;
+}
+
+message viewAllProductsResponse {
+  repeated Product product = 1;
+}
+
+message Product {
+  required int32 productID =1;
+  optional  string productName = 2;
+  optional int32 quantity = 3;
+}
+
+message Empty{
+
+}
+
+message updateProductRequest {
+  repeated Product product = 1;
+}
+
+message updateProductResponse {
+  required string message = 1;
+}
