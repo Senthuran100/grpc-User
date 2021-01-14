@@ -1,8 +1,11 @@
-package com.senthuran.Product;
+syntax = "proto3";
+
+package com.senthuran.User;
 
 option java_multiple_files = true;
-option java_package = "com.senthuran.Product";
+option java_package = "com.senthuran.User.Controller";
 import "google/api/annotations.proto";
+import "user.proto";
 
 service ProductService {
 
@@ -34,23 +37,23 @@ service ProductService {
 }
 
 message addProductRequest {
-  required int32 productID =1;
-  optional  string productName = 2;
-  optional int32 quantity = 3;
+   int32 productID =1;
+    string productName = 2;
+   int32 quantity = 3;
 }
 
 message addProductResponse {
- required string message =1;
+  string message =1;
 }
 
 message viewProductRequest {
-   required int32 productId = 1;
+    int32 productId = 1;
 }
 
 message viewProductResponse {
-  required int32 productID =1;
-  optional  string productName = 2;
-  optional int32 quantity = 3;
+   int32 productID =1;
+    string productName = 2;
+   int32 quantity = 3;
 }
 
 message viewAllProductsResponse {
@@ -58,19 +61,16 @@ message viewAllProductsResponse {
 }
 
 message Product {
-  required int32 productID =1;
-  optional  string productName = 2;
-  optional int32 quantity = 3;
+   int32 productID =1;
+    string productName = 2;
+   int32 quantity = 3;
 }
 
-message Empty{
-
-}
 
 message updateProductRequest {
   repeated Product product = 1;
 }
 
 message updateProductResponse {
-  required string message = 1;
+   string message = 1;
 }
