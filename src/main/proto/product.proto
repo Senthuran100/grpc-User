@@ -5,7 +5,8 @@ package com.senthuran.User;
 option java_multiple_files = true;
 option java_package = "com.senthuran.User.Controller";
 import "google/api/annotations.proto";
-import "user.proto";
+import "google/protobuf/empty.proto";
+
 
 service ProductService {
 
@@ -22,7 +23,7 @@ service ProductService {
     };
   }
 
-  rpc viewAllProducts(Empty) returns (viewAllProductsResponse){
+  rpc viewAllProducts(google.protobuf.Empty) returns (viewAllProductsResponse){
     option (google.api.http) = {
       get: "/v1/product"
     };

@@ -6,6 +6,6 @@ import org.springframework.data.couchbase.core.query.ViewIndexed;
 import org.springframework.data.couchbase.repository.CouchbaseRepository;
 
 @N1qlPrimaryIndexed
-@ViewIndexed(designDoc = "user",viewName = "all")
+@ViewIndexed(designDoc = "product",viewName = "all")
 public interface ProductRepository extends CouchbaseRepository<Product,Integer> {
 }

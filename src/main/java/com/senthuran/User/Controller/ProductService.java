@@ -1,8 +1,9 @@
 package com.senthuran.User.Controller;
 
+import com.google.protobuf.Empty;
 import com.senthuran.Product.Controller.*;
-import com.senthuran.Product.Controller.Empty;
 import com.senthuran.User.Document.Product;
+import com.senthuran.User.Document.User;
 import com.senthuran.User.Repository.ProductRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -22,7 +23,19 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void viewProduct(viewProductRequest request, StreamObserver<viewProductResponse> responseObserver) {
-        super.viewProduct(request, responseObserver);
+        logger.info("View Product method is invoked");
+        Optional<Product> product= productRepository.findById(request.getProductId());
+        if(product.isPresent()) {
+            viewProductResponse productresponse = viewProductResponse.newBuilder().setQuantity(product.get().getQuantity()).setProductID(product.get().getProductId())
+                    .setProductName(product.get().getProductName()).build();
+            responseObserver.onNext(productresponse);
+            responseObserver.onCompleted();
+        } else {
+            responseObserver.onError(Status.NOT_FOUND
+                    .withDescription("There is no User with id "+request.getProductId())
+                    .asRuntimeException()
+            );
+        }
     }
 
     @Override
@@ -41,13 +54,29 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
         }
     }
 
-//    @Override
-//    public void viewAllProducts(Empty request, StreamObserver<viewAllProductsResponse> responseObserver) {
-//        super.viewAllProducts(request, responseObserver);
-//    }
-
     @Override
     public void updateProduct(updateProductRequest request, StreamObserver<updateProductResponse> responseObserver) {
+        logger.info("Add Product is getting executed");
         super.updateProduct(request, responseObserver);
+    }
+
+    @Override
+    public void viewAllProducts(Empty request, StreamObserver<viewAllProductsResponse> responseObserver) {
+        logger.info("View All Products is getting executed");
+        try {
+            logger.info("Hi 1111");
+            Iterable<Product> productList = productRepository.findAll();
+            logger.info("Hi ",productList);
+            viewAllProductsResponse.Builder productResponse = viewAllProductsResponse.newBuilder();
+            logger.info("Hi ",productList);
+            int counter = 0;
+            for (Product product : productList) {
+                productResponse.addProduct(counter, com.senthuran.User.Controller.Product.newBuilder().setProductID(product.getProductId()).setProductName(product.getProductName()).setQuantity(product.getQuantity()));
+            }
+            responseObserver.onNext(productResponse.build());
+            responseObserver.onCompleted();
+        } catch (Exception e){
+            logger.info("Exception ", e);
+        }
     }
 }
