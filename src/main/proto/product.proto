@@ -73,5 +73,5 @@ message updateProductRequest {
 }
 
 message updateProductResponse {
-   string message = 1;
+   repeated string message = 1;
 }

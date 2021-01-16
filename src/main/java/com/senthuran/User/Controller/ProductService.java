@@ -56,19 +56,30 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void updateProduct(updateProductRequest request, StreamObserver<updateProductResponse> responseObserver) {
-        logger.info("Add Product is getting executed");
-        super.updateProduct(request, responseObserver);
+        logger.info("Update Product is getting executed");
+        updateProductResponse.Builder Response = updateProductResponse.newBuilder();
+        request.getProductList().forEach((product) -> {
+            Optional<Product> productitem= productRepository.findById(product.getProductID());
+            logger.info("productitem "+productitem);
+            if(productitem.isPresent()){
+                productRepository.save(
+                        new Product(product.getProductID(),product.getProductName(),product.getQuantity())
+                );
+               Response.addMessage("Successfully updated "+product.getProductID());
+            } else {
+                Response.addMessage("Failed to add "+product.getProductID());
+            }
+        });
+        responseObserver.onNext(Response.build());
+        responseObserver.onCompleted();
     }
 
     @Override
     public void viewAllProducts(Empty request, StreamObserver<viewAllProductsResponse> responseObserver) {
         logger.info("View All Products is getting executed");
         try {
-            logger.info("Hi 1111");
             Iterable<Product> productList = productRepository.findAll();
-            logger.info("Hi ",productList);
             viewAllProductsResponse.Builder productResponse = viewAllProductsResponse.newBuilder();
-            logger.info("Hi ",productList);
             int counter = 0;
             for (Product product : productList) {
                 productResponse.addProduct(counter, com.senthuran.User.Controller.Product.newBuilder().setProductID(product.getProductId()).setProductName(product.getProductName()).setQuantity(product.getQuantity()));
