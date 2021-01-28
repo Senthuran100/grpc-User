@@ -48,7 +48,4 @@ public class User {
         this.name = name;
         this.address = address;
     }
-
-
-
 }

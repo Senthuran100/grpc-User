@@ -1,9 +1,7 @@
 package com.senthuran.User.Controller;
 
 import com.google.protobuf.Empty;
-import com.senthuran.Product.Controller.*;
 import com.senthuran.User.Document.Product;
-import com.senthuran.User.Document.User;
 import com.senthuran.User.Repository.ProductRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -56,7 +54,7 @@ public class ProductService extends ProductServiceGrpc.ProductServiceImplBase {
 
     @Override
     public void updateProduct(updateProductRequest request, StreamObserver<updateProductResponse> responseObserver) {
-        logger.info("Update Product is getting executed");
+        logger.info("Calling update product");
         updateProductResponse.Builder Response = updateProductResponse.newBuilder();
         request.getProductList().forEach((product) -> {
             Optional<Product> productitem= productRepository.findById(product.getProductID());

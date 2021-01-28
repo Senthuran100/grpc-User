@@ -16,7 +16,7 @@ gRPC based API service implementation  using Spring boot and Couchbase Server.
 
 * Annotate the gRPC service with the HTTP Options. Please refer this [proto](src/main/proto/user.proto) file.
 * Generate the .pd file from the proto file. Please refer the below command to generate the .pb file.<br/>
-``` protoc -I. -Ibuild/extracted-include-protos/main --include_imports --include_source_info --descriptor_set_out=user.pb src/main/proto/user.proto ```
+``` protoc -I. -Ibuild/extracted-include-protos/main --include_imports --include_source_info --descriptor_set_out=user.pb src/main/proto/*.proto ```
 * Configure the envoy to proxy the HTTP request to the GRPC service.    
   -> For this create a config file and make the configuration. Please refer this [envoy-config.yml](config/envoy-config.yml) file.
 * Run the envoy using docker. Some time you need to pull the docker image for envoyproxy/envoy. Then run the below command to run the docker image. <br/>
