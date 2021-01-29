@@ -29,10 +29,10 @@ public class UserApplication {
 
 	@PostConstruct
 	public void initUserRepo() {
-		userRepository.saveAll(Stream
-				.of( new User(1111, "ABC","NY USA"),
-						new User(1112, "XYZ","LA USA"))
-				.collect(Collectors.toList()));
+//		userRepository.saveAll(Stream
+//				.of( new User(1111, "ABC","NY USA"),
+//						new User(1112, "XYZ","LA USA"))
+//				.collect(Collectors.toList()));
 	}
 
 	@PostConstruct

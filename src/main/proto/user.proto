@@ -5,6 +5,7 @@ package com.senthuran.User;
 option java_multiple_files = true;
 option java_package = "com.senthuran.User.Controller";
 import "google/api/annotations.proto";
+import "product.proto";
 
 service UserService{
   rpc viewUser(viewUserRequest) returns (viewUserResponse) {
@@ -34,12 +35,14 @@ message  viewUserResponse{
   int32 userid = 1;
   string name = 2;
   string adddress = 3;
+  repeated Product product = 4;
 }
 
 message userRequest{
   int32 userid = 1;
   string name = 2;
   string adddress = 3;
+  repeated ProductId productList=4;
 }
 
 message userResponse {
@@ -50,6 +53,10 @@ message Empty{
 
 }
 
+message ProductId {
+  repeated int32 product = 1;
+}
+
 message viewAllUserResponse {
   repeated User user = 1;
 }
@@ -58,4 +65,5 @@ message User {
   int32 id = 1;
   string name = 2  ;
   string address = 3;
+  repeated Product product =4;
 }

@@ -1,17 +1,22 @@
 package com.senthuran.User.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 import com.couchbase.client.java.repository.annotation.Id;
 import com.couchbase.client.java.repository.annotation.Field;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Document
 public class User {
     @Id
-    private int id;
+    private Integer id;
 
     @Field
     private String name;
@@ -19,11 +24,15 @@ public class User {
     @Field
     private String address;
 
-    public int getId() {
+    @NotNull
+    @Field
+    private List<Product> Products = new ArrayList<>();
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,13 +48,22 @@ public class User {
         return address;
     }
 
+    public List<Product> getProducts() {
+        return Products;
+    }
+
+    public void setProducts(List<Product> products) {
+        Products = products;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
 
-    public User(int id, String name, String address) {
+    public User(Integer id, String name, String address, @NotNull List<Product> products) {
         this.id = id;
         this.name = name;
         this.address = address;
+        Products = products;
     }
 }

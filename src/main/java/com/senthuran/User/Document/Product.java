@@ -11,23 +11,23 @@ import org.springframework.data.couchbase.core.mapping.Document;
 @Document
 public class Product {
     @Id
-    private int productId;
+    private Integer productId;
     @Field
     private String productName;
     @Field
-    private int quantity;
+    private Integer quantity;
 
-    public Product(int productId, String productName, int quantity) {
+    public Product(Integer productId, String productName, Integer quantity) {
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
     }
 
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 
@@ -39,12 +39,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
 }
