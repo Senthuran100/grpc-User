@@ -18,12 +18,17 @@ service UserService{
       post: "/v1/user"
       body: "*"
     };
-
   }
   rpc viewAllUser(Empty) returns (viewAllUserResponse){
     option (google.api.http) = {
       get: "/v1/user"
     };
+  }
+  rpc multiplyNumber(numberRequest) returns (numberResponse) {
+    option(google.api.http) = {
+          post: "/v1/number"
+          body: "*"
+        };
   }
 }
 
@@ -66,4 +71,12 @@ message User {
   string name = 2  ;
   string address = 3;
   repeated Product product =4;
+}
+
+message numberRequest {
+  int32 number = 1;
+}
+
+message numberResponse {
+  int64 response_number=1;
 }

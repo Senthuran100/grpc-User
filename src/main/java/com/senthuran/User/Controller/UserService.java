@@ -50,6 +50,16 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     }
 
     @Override
+    public void multiplyNumber(numberRequest request, StreamObserver<numberResponse> responseObserver) {
+        if(request.getNumber()>0){
+            responseObserver.onNext(numberResponse.newBuilder().setResponseNumber(request.getNumber()*request.getNumber()).build());
+        } else {
+            responseObserver.onNext(numberResponse.newBuilder().setResponseNumber(0).build());
+        }
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void addUser(userRequest request, StreamObserver<userResponse> responseObserver) {
 
         logger.info("Add User method is invoked");
@@ -95,5 +105,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         response.onCompleted();
 
     }
+
+
 
 }
